@@ -1,0 +1,4 @@
+* lm-emacs
+
+modular configuration of emacs for LM (core + dev + lm-functions + sandbox), for Linux and Windows
+
