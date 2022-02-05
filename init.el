@@ -1,16 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;					LM 2022-02-04					;;
-;;    Time-stamp: <2022-01-28 16:32:08 f205200>		;;
+;;    Time-stamp: <2022-02-05 15:20:27 ramius>		;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; 		NMB: dove si abilita il CUA mode? Qui o in custom-emacs.el??
-
-
-;;					LM 2022-02-04
-;;     	Time-stamp: <2022-01-28 16:32:08 f205200>
-;;
-
-;; 		NMB: dove si abilita il CUA mode? Qui o in custom-emacs.el??
 
 (random t)													;; random first, alea later
 (message "Reading cnfgrtn file: resistence is futile.")		;; in minibuffer
@@ -28,7 +19,7 @@
 ;;                     (no lisp function, sorry)                               ;;
 
 (global-set-key (kbd "C-<tab>") 'next-buffer)        		;; TAB is for switching
-(global-set-key (kbd "C-S-<tab>") 'previous-buffer)  		;; SHIFT-TAB is for reverse
+(global-set-key (kbd "C-S-<tab>") 'previous-buffer)  		;; SHIFT-TAB is for reverse switching
 (global-set-key "\C-x\C-b" 'buffer-menu)  					;; C-x C-b puts point on buffer list!
 (global-set-key (kbd "C-c C-b") 'eval-buffer)        		;; evaluate buffer (non è definito...?)
 (global-set-key "\C-c\C-a" 'mark-whole-buffer)      		;; make C-c C-a “select all”
