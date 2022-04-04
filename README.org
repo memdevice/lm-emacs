@@ -2,3 +2,28 @@
 
 modular configuration of emacs for LM (core + dev + lm-functions + sandbox), for Linux and Windows
 
+** how to memo
+
+I found this neat solution from EmacsWiki: [https://www.emacswiki.org/emacs/InitFile]
+
+ $ emacs -q -l ~/my-init-file.el
+
+(not exactly using a custom directory, but works nicely because you most likely have a single entry file anyway)
+
+
+Set your var before loading your init file:
+
+emacs -q --eval '(setq alt-conf t)' --load ~/.emacs
+
+Then, in your init-file (in this case ~/.emacs):
+
+(defvar alt-conf nil)
+
+(if alt-conf
+    (let ((default-directory "~/src/elisp-test/"))
+      (normal-top-level-add-subdirs-to-load-path)
+      (various-alt-config-stuff)
+      (message "Alternate conf"))
+  (message "Regular conf"))
+
+cfr: https://emacs.stackexchange.com/questions/4253/how-to-start-emacs-with-a-custom-user-emacs-directory
