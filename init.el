@@ -1,9 +1,9 @@
-;;;;;;            init.el                                                  ;;;;;;
 
-;; Time-stamp: <2022-03-11 12:40:56 f205200>
+
+;; Time-stamp: <2022-04-05 14:15:06 f205200>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;					LM 2022-02-04 -- 2022-03-07		                           ;;
+;;					LM 2022-02-04 -- 2022-03-17		                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (random t)													;; random first, alea later
@@ -11,11 +11,12 @@
 ;;(menu-bar-mode -1)										;; no menu bar
 (scroll-bar-mode -1)										;; no scroll bar
 (setq inhibit-startup-message t)	                        ;; no startup screen, only scratch buffer
+(setq inhibit-startup-echo-area-message t)                  ;; no message in echo area
 (message "Reading cnfgrtn file: resistence is futile.")		;; in minibuffer
 
 ;;  ————————————————————  directory e file  —————————————————————————————————  ;;
 
-;; (ignore-errors (load "~/.emacs.d/boot.el"))       ;; frame appearence at start up here
+(ignore-errors (load "~/.emacs.d/boot.el"))          ;; frame appearence at start up here
 (ignore-errors (load "~/.emacs.d/lm-data"))          ;; LM private and data
 (ignore-errors (load "~/.emacs.d/win32"))            ;; when on windows, do as windowers do
 (ignore-errors (load "~/.emacs.d/functions.el"))
@@ -23,12 +24,13 @@
 (ignore-errors (load "~/.emacs.d/sandbox.el"))    ;; LISP code test here
 (add-to-list 'load-path "~/.emacs.d/lisp/")          ;; elisp lib dir (crank package)
 (ignore-errors (load "~/.emacs.d/packages.el"))      ;; packages call and config here
+;;(ignore-errors (load "~/.emacs.d/dev.el"))      ;; ELISP dev area
 
+;;  —————————————————————————————————————————————————————————————————————————  ;;
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/") ;; themes directory (only root dir, no subdirs)
 ;; aggiungo la directory dei temi alla variabile specifica
 ;; NB: per aggiungere le subdir guarda qui, in basso:
 ;; https://www.emacswiki.org/emacs/CustomThemes
-
 (setq custom-file "~/.emacs.d/custom-file.el")
 (ignore-errors (load custom-file))	;; sic (it may not yet exist...)
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
@@ -45,7 +47,7 @@
 (setq savehist-file "~/.emacs.d/savehist")
 (savehist-mode 1)       ;; salvataggio dell'history del minibuffer e find-file tra le sessioni
 ;;
-;; 	configurazione che inceppa lo scroll-all-mode IL MOTIVO E' IL CUA MODE!!
+;; 	NB: il CUA mode inceppa lo scroll-all-mode !!
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
 
@@ -57,6 +59,9 @@
 
 ;;  ————————————————————   core keybindings —————————————————————————————————  ;;
 
+
+;;(global-set-key (kbd "M-<down>") 'next-buffer)        	  ;; alias for M-} ;; formerly "next-buffer"
+;;(global-set-key (kbd "M-<up>") 'backward-paragraph)        ;; alias for M-{
 (global-set-key (kbd "C-<tab>") 'next-buffer)        		;; TAB is for switching
 (global-set-key (kbd "C-S-<tab>") 'previous-buffer)  		;; SHIFT-TAB is for reverse
 (global-set-key (kbd "C-x k") 'kill-current-buffer)			;; close the buffer, no questions!
@@ -76,19 +81,28 @@
 ;; C-c n  - cfr. sotto
 (global-set-key (kbd "C-c o") 'occur)               		;; M-x occur shortcut
 (global-set-key (kbd "C-c r") 'query-replace-regexp) 		;; default C-M-%
-(global-set-key (kbd "C-c w") 'visual-line-mode)            ;; activate/deactivate word wrapping
-(global-set-key (kbd "C-c z") 'wrong-function)              ;; test for a function that dosen't exist
+(global-set-key (kbd "C-c v") 'visual-line-mode)            ;; activate/deactivate word wrapping
+;;(global-set-key (kbd "C-c z") 'wrong-function)              ;; test for a function that dosen't exist
 ;;
 (define-key global-map (kbd "C-c +") 'text-scale-increase) 	;; C-c + increse font size
 (define-key global-map (kbd "C-c -") 'text-scale-decrease) 	;; C-c - decrese font size
 (global-set-key (kbd "C-c C-j") 'eval-buffer)        		;; evaluate buffer (non è definito...?)
-(global-set-key (kbd "C-c C-a") 'mark-whole-buffer)      	;; make C-c C-a “select all”
+;;(global-set-key (kbd "C-c C-a") 'mark-whole-buffer)      	;; make C-c C-a “select all”
 ;;(global-set-key (kbd "C-x C-b") 'buffer-menu)  	     ;; C-x C-b puts point on buffer list!
 (global-set-key (kbd "C-x C-b") 'ibuffer)  		       ;; idem; but now massive regexp substuitutions is possibile on
                                                        ;; *non*  opened files! (i.e. on file not only on emacs buffers)
                                                        ;; ibuffer works as dired
-(global-set-key (kbd "M-/") 'hippie-expand)            ;; ??
+;; BETTER DEFAULTS -
+;; https://github.com/technomancy/better-defaults/blob/master/better-defaults.el
+(global-set-key (kbd "M-/") 'hippie-expand) ;; ??
+(global-set-key (kbd "C-c B") 'bury-buffer) ;; place the current buffer at the end of the buffer list
 
+;;  ———————————————————  hyper and super       ——————————————————————————————  ;;
+
+;; H-yper and s-uper test
+
+(global-set-key (kbd "H-t") "  Hello HYPER world !!!  ")
+(global-set-key (kbd "s-t") "  Hello sUPER world !!!  ")
 
 ;;  ———————————————————  quick file shortcut   ——————————————————————————————  ;;
 
@@ -121,6 +135,11 @@
 (put 'downcase-region 'disabled nil)      ;; lowercase region with C-x C-l
 (put 'upcase-region 'disabled nil)        ;; uppercase region with C-x C-u.
 
+;; Do-What-I-Mean versions of editing commands
+;; (global-set-key (kbd "M-u") 'upcase-dwim)
+;; (global-set-key (kbd "M-l") 'downcase-dwim)
+;; (global-set-key (kbd "M-c") 'capitalize-dwim)
+
 ;;  ————————————————————————    aliases           ————————————————————————————  ;;
 
 (defalias 'qrr 'query-replace-regexp)						;; breviter
@@ -145,6 +164,7 @@
 ;;(setq initial-major-mode 'text-mode)    ;; force Emacs to start in text mode
 (setq case-fold-search t)                 ;; make searches case insensitive ;;
 (ffap-bindings)                           ;; find-file-at-point: smarter C-x C-f (point on path or URL)
+;;(fido-mode 1)                             ;; An enhanced `icomplete-mode' that emulates `ido-mode'.
 
 ;;  ————————————————————————    hooks            ————————————————————————————  ;;
 
@@ -169,6 +189,27 @@
 ;;(save-place-mode 1) 				      ;; remember cursor position (emacs 25.1 or later)
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
+;;          LM: default to be defined...
+
+;--; IDO mode
+;;
+;;I’ll write a longer post espousing the virtues of Ido at some other point, but for now I recommend you put this in your .emacs file:
+(ido-mode 1)
+(setq ido-enable-flex-matching t)
+;;IF you want Ido mode to work with C-x C-f (find-files) then add this as well:
+
+;(setq ido-everywhere t)
+
+;;Some people find Ido’s find-files support a bit intrusive. Just remember that if you type C-f Ido will revert to the old-style completion engine!
+
+;--; Making Emacs Auto Indent
+;;
+;; For some insane reason Emacs will not auto-indent the point when you press RET. To do that you must type C-j. I don’t like that at all; yes, there are perfectly valid reasons for why you wouldn’t want to indent automagically. I prefer to enable it globally and then disable it locally for each mode I do not like.
+
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;;  —————————————————————————————————————————————————————————————————————————  ;;
+
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
 ;;                         LM core LIPS packages (cfr. function.el)
@@ -184,6 +225,16 @@
 ;; C-c l p: lorem-ipsum-insert-paragraphs
 ;; C-c l s: lorem-ipsum-insert-sentences
 ;; C-c l l: lorem-ipsum-insert-list
+
+;; smartscan (M-n/M-p) (M-') (Cu M-')
+(require 'smartscan)
+;; Enable minor mode in a specific mode hook using
+;; (smartscan-mode 1)
+;; or globally using
+(global-smartscan-mode 1)
+
+
+;;Smart Scan will try to infer the symbol your point is on and let you jump to other, identical, symbols elsewhere in your current buffer with a single key stroke. The advantage over isearch is its unintrusiveness; there are no menus, prompts or other UI elements that require your attention.
 
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 ;;								configurazioni								   ;;
@@ -218,14 +269,14 @@
 
 ;; E TRE!!
 
-(prefer-coding-system 'utf-8-unix)
-(set-default-coding-systems 'utf-8-unix)
-(set-terminal-coding-system 'utf-8-unix)
-(set-keyboard-coding-system 'utf-8-unix)
-(set-selection-coding-system 'utf-8-unix)
-(setq-default buffer-file-coding-system 'utf-8-unix)
-;; Treat clipboard input as UTF-8 string first; compound text next, etc.
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+;; (prefer-coding-system 'utf-8-unix)
+;; (set-default-coding-systems 'utf-8-unix)
+;; (set-terminal-coding-system 'utf-8-unix)
+;; (set-keyboard-coding-system 'utf-8-unix)
+;; (set-selection-coding-system 'utf-8-unix)
+;; (setq-default buffer-file-coding-system 'utf-8-unix)
+;; ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+;; (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
@@ -247,19 +298,19 @@
 ;; alternativa precedente
 ;; cfr: https://www.masteringemacs.org/article/working-coding-systems-unicode-emacs
 
-;; (prefer-coding-system 'utf-8)
-;; (prefer-coding-system 'utf-8-unix) ;; potrebbe essere meglio questa
-;; (set-default-coding-systems 'utf-8-unix) ;; e così questa
-;; (set-terminal-coding-system 'utf-8)
-;; (set-keyboard-coding-system 'utf-8)
-;; ;; backwards compatibility as default-buffer-file-coding-system
-;; ;; is deprecated in 23.2.
+(prefer-coding-system 'utf-8)
+(prefer-coding-system 'utf-8-unix) ;; potrebbe essere meglio questa
+(set-default-coding-systems 'utf-8-unix) ;; e così questa
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+;; backwards compatibility as default-buffer-file-coding-system
+;; is deprecated in 23.2.
 ;; (if (boundp 'buffer-file-coding-system)
 ;;     (setq-default buffer-file-coding-system 'utf-8)
 ;;   (setq default-buffer-file-coding-system 'utf-8))
 
 ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
-;; (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
 ;; cfr.: https://stackoverflow.com/questions/20723229/how-to-reset-emacs-to-save-files-in-utf-8-unix-character-encoding
 
@@ -267,18 +318,23 @@
 ;;						ON [F]UNCTION KEYS!
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
-(global-set-key [f1] 'other-window)      ;; [F1] switch to oter window
-;;(global-set-key [f2] () ;; sync translation windows
+(global-set-key [f1] 'delete-other-windows)	;; [F1] delete-other-windows (C-x 1 alias)
+(global-set-key [f2] 'switch-to-minibuffer) ;; [F2]
 ;; [F3] ;; start recording macro
 ;; [F4] ;; stop recording macro / execute last macro
+;;
 (global-set-key [f5] 'reload-dotemacs)		;; [F5] reload emacs dotfile (init.el) 		- (M-x load-file)
-(global-set-key [f6] "HelLo woRld!! ")		;; [F6] say HelLo woRld! (LM test function)
+(global-set-key [f6] 'repeat)               ;; [F6] repeat last command (alias for C-x z)
 (global-set-key [f7] 'kill-other-buffers)   ;; [F7] kill all buffers except the currento one
-(global-set-key [f8] (lambda () (interactive) (find-file "~/note.org"))) ;; NB: shortcut di C-c n - apre il notes.org
+(global-set-key [f8] 'xah-new-empty-buffer)	;; [F8] create new empty buffer, without prompting for a name
+;;
 (global-set-key [f9] 'recentf-open-files)	;; [F9] recentf on: file aperti di recente 	- (M-x recentf-open-files)
 ;; [F10]	no way! menu
 ;; [F11]    full-screen maximize on/off
-(global-set-key [f12] 'xah-new-empty-buffer)	;; [F12] to open a new empty buffer, without prompting for a name
+(global-set-key [f12] 'other-window)      ;; [F12] switch to oter window (C-x o alias) ;;;; former xah-new-empty-buffer
+
+;; seconda passata (cit.)
+(global-set-key [f13] "HelLo woRld!! ")		;; [F13] say HelLo woRld! (LM test function)
 
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
@@ -325,6 +381,27 @@ Version 2017-11-01"
     ))
 ;; [F12]
 
+;; [F2] switch-to-minibuffer: returns the focus to the minibuffer, no matter which window is currently selected
+(defun switch-to-minibuffer ()
+  "Switch to minibuffer window."
+  (interactive)
+  (if (active-minibuffer-window)
+      (select-window (active-minibuffer-window))
+    (error "Minibuffer is not active")))
+;; ;; (global-set-key "\C-co" 'switch-to-minibuffer) ;; Bind to `C-c o'
+;; LM: F2 perché C-c o confligge per me con M-x occur
+;;     volendo un chord intermedio si deve spostare occur altrove
+;;     per mantenere la simmetria tra C-x o e C-c o.
+;; [F2]
+
+;; NMB: se invece lo scopo è *chiudere* la echo area (e non il minibuffuer) allora basta usare C-] e/o mappare su [F2] la funzione standard abort-recursive-edit
+
+;; cfr.: https://www.emacswiki.org/emacs/MiniBuffer#minibuffer
+
+
+
+
+
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
 
@@ -334,10 +411,10 @@ Version 2017-11-01"
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 ;;                      titolo del frame (SO windows)
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
-(setq frame-title-format '(
-    "        ⚪ ⚫                                                                      core LM emacs")) ;; Titolo!
-
+;; (setq frame-title-format '("     ⚪⚫      core LM emacs — ") ;; Titolo!
 ;;	cfr.: https://marcohassan.github.io/bits-of-experience/pages/emacs/
+
+(setq frame-title-format "   ⚪⚫    —   core LM emacs   —                                                  %b")
 
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 ;;                   impostazione dei buffer iniziali
@@ -348,9 +425,12 @@ Version 2017-11-01"
 ;; NB: aperto in Fundamentl mode
 (with-current-buffer "*42*" (insert ";;  ————————————————————————————————————————————————————————————————————————— ;;
 \n            [DUMP HERE]  —  BTW: The answer is: 42!   \n
-;;  ————————————————————————————————————————————————————————————————————————— ;;\n\n"))
+;;  ————————————————————————————————————————————————————————————————————————— ;;
+\n\n  ☃❄ "))
 
 (switch-to-buffer "*scratch*")
+;; (sit-for 8) ;; attende 42 secondi
+;; (switch-to-buffer "*42*")
 
 ;;  —————————————————————————————————————————————————————————————————————————  ;;
 
