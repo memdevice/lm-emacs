@@ -1,5 +1,16 @@
 
-;; Time-stamp: <2022-03-08 17:38:36 f205200>
+;; Time-stamp: <2022-03-17 11:34:15 f205200>
+
+;; ―――――――――――――――――――  hyper super keys  ―――――――――――――――――――――――――――――――――――  ;;
+
+;; «In Windows you can add this to to your .emacs to enable hyper and super:»
+
+;;(setq w32-apps-modifier 'hyper)
+;;(setq w32-lwindow-modifier 'super)
+(setq w32-rwindow-modifier 'hyper)
+
+;; cfr: https://www.masteringemacs.org/article/mastering-key-bindings-emacs
+
 
 ;; ―――――――――――――――――――  cygwin shell   ――――――――――――――――――――――――――――――――――――――  ;;
 
