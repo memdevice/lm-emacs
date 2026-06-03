@@ -12,6 +12,7 @@
 (load (expand-file-name "ui-modern"    user-emacs-directory))
 (load (expand-file-name "boot"         user-emacs-directory))
 ;; (when (eq system-type 'windows-nt) (load (expand-file-name "win32" user-emacs-directory)))
+;; (load (expand-file-name "lm-data"         user-emacs-directory)) ; off by default
 ;; (load (expand-file-name "sandbox"    user-emacs-directory))     ; off by default
  
 
