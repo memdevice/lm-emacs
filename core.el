@@ -10,8 +10,8 @@
 (scroll-bar-mode -1)                         ;; no scroll bar
 (setq inhibit-startup-message t)             ;; no startup screen
 (setq inhibit-startup-echo-area-message t)
-;;(setq message-log-max nil)                   ;; disabilita il log nel *Messages* buffer
-;;(kill-buffer "*Messages*")                   ;; commenta queste due righe se vuoi il log
+(setq message-log-max nil)                   ;; disabilita il log nel *Messages* buffer
+(kill-buffer "*Messages*")                   ;; commenta queste due righe se vuoi il log
 (message "Reading cnfgrtn file - resistence is futile.")
 
 ;;  ————————————————————  path e file di sistema  ——————————————————————————  ;;
@@ -74,6 +74,14 @@
 ;;  ————————————————————  aliases  —————————————————————————————————————————  ;;
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;;  ————————————————————  recentf  ————————————————————————————————————————  ;;
+;; built-in: lista dei file aperti di recente
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-saved-items 256)
+(setq recentf-max-menu-items  42)
+;; [F9] recentf-open-files  (keybinding definito sotto)
 
 ;;  ————————————————————  tasti funzione  ——————————————————————————————————  ;;
 (global-set-key [f1]  'delete-other-windows)  ;; [F1] delete-other-windows (C-x 1)
