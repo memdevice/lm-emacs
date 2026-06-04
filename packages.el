@@ -5,8 +5,10 @@
 
 ;;  ————————————————————  package.el bootstrap  ————————————————————————————  ;;
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("elpa"  . "https://elpa.gnu.org/packages/") t)
+(setq package-archives
+      '(("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa"  . "https://melpa.org/packages/")))
 (package-initialize)
 
 ;; aggiorna il catalogo dei package se non è mai stato scaricato
@@ -18,15 +20,6 @@
 (require 'use-package)
 (setq use-package-verbose t)            ;; mostra in *Messages* cosa viene caricato
 ;;(setq use-package-always-ensure nil)  ;; default: :ensure va dichiarato esplicitamente
-
-;;  ————————————————————  package built-in: recentf  ———————————————————————  ;;
-(use-package recentf
-  :init
-  (recentf-mode 1)
-  :custom
-  (recentf-max-saved-items 256)
-  (recentf-max-menu-items  42))
-;; [F9] recentf-open-files  (keybinding definito in core.el)
 
 ;;  ————————————————————  package built-in: dired  —————————————————————————  ;;
 (use-package dired
@@ -47,15 +40,13 @@
 ;; (aggiungi qui i nuovi package con :ensure t)
 
 ;;  ————————————————————  standby  —————————————————————————————————————————  ;;
-(use-package smartscan                ;; M-n / M-p: salta tra simboli identici nel buffer
-   :ensure t
-   :config (global-smartscan-mode 1))
-;; ;; M-n : next symbol in buffer
-;; ;; M-p : previous symbol in buffer
+;; (use-package smartscan                ;; M-n / M-p: salta tra simboli identici nel buffer
+;;   :ensure t
+;;   :config (global-smartscan-mode 1))
 
-(use-package lorem-ipsum              ;; inserisce testo lorem ipsum
-   :ensure t
-   :config (lorem-ipsum-use-default-bindings))
+;; (use-package lorem-ipsum              ;; inserisce testo lorem ipsum
+;;   :ensure t
+;;   :config (lorem-ipsum-use-default-bindings))
 ;; ;; C-c l p: lorem-ipsum-insert-paragraphs
 ;; ;; C-c l s: lorem-ipsum-insert-sentences
 ;; ;; C-c l l: lorem-ipsum-insert-list
