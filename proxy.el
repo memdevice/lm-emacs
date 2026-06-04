@@ -4,20 +4,20 @@
 ;;         credenziali proxy richieste solo se ci sono package da scaricare    ;;
 ;;         caricare PRIMA di packages.el (cfr. init.el)                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 
+
 ;;  ————————————————————  variabili  ———————————————————————————————————————  ;;
 (defvar proxy-username "UTENZE"
   "Proxy LDAP username (domain prefix)")
- 
+
 (defvar proxy-password-cached nil
   "Cached proxy password (in memory only, never on disk)")
- 
+
 (defvar proxy-host "itaca-prod.utenze.bankit.it"
   "Proxy server hostname")
- 
+
 (defvar proxy-port "8080"
   "Proxy server port")
- 
+
 ;;  ————————————————————  funzioni  ————————————————————————————————————————  ;;
 (defun proxy-get-credentials (&optional no-activate)
   "Chiedi e memorizza le credenziali proxy. Password cachata in memoria."
@@ -42,7 +42,7 @@
                         (cons "Proxy Authentication" encoded-auth))))
       (message "✓ Proxy configurato: %s:%s (utente: %s)"
                proxy-host proxy-port proxy-username))))
- 
+
 (defun proxy-clear-cache ()
   "Pulisci la password dalla cache (verrà richiesta al prossimo uso)."
   (interactive)
@@ -50,7 +50,7 @@
   (setq url-proxy-services nil)
   (setq url-http-proxy-basic-auth-storage nil)
   (message "✓ Proxy cache cleared"))
- 
+
 ;;  ————————————————————  attivazione automatica  ——————————————————————————  ;;
 ;; Si attiva SOLO quando package-install sta per scaricare un package
 ;; mancante: se tutto è già installato non chiede nulla.
@@ -60,19 +60,25 @@
     (unless proxy-password-cached
       (message "Package '%s' mancante - configurazione proxy necessaria..." pkg)
       (proxy-get-credentials))))
- 
+
 (advice-add 'package-install :before #'proxy-activate-if-needed)
- 
+
+(defun proxy-activate-for-refresh ()
+  "Attiva il proxy prima di scaricare il catalogo dei package."
+  (unless proxy-password-cached
+    (message "Scarico catalogo package - configurazione proxy necessaria...")
+    (proxy-get-credentials)))
+
+(advice-add 'package-refresh-contents :before #'proxy-activate-for-refresh)
+
 ;;  ————————————————————  keybindings  —————————————————————————————————————  ;;
 ;; NB: verificare conflitti in lm-keybindings.el (C-c C-p occupato in org-mode)
 (global-set-key (kbd "C-c C-p") 'proxy-get-credentials) ;; configura proxy manualmente
 (global-set-key (kbd "C-c C-l") 'proxy-clear-cache)     ;; pulisci cache password
- 
+
 ;;  ————————————————————————————————————————————————————————————————————————  ;;
 (message "proxy.el caricato - credenziali richieste solo se necessario")
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                            end of proxy.el                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- 
-
