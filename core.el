@@ -10,8 +10,8 @@
 (scroll-bar-mode -1)                         ;; no scroll bar
 (setq inhibit-startup-message t)             ;; no startup screen
 (setq inhibit-startup-echo-area-message t)
-(setq message-log-max nil)                   ;; disabilita il log nel *Messages* buffer
-(kill-buffer "*Messages*")                   ;; commenta queste due righe se vuoi il log
+;;;(setq message-log-max nil)                   ;; disabilita il log nel *Messages* buffer
+;;;(kill-buffer "*Messages*")                   ;; commenta queste due righe se vuoi il log
 (message "Reading cnfgrtn file - resistence is futile.")
 
 ;;  ————————————————————  path e file di sistema  ——————————————————————————  ;;
