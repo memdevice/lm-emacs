@@ -32,6 +32,8 @@
   :init
   (marginalia-mode 1))
 
+(keymap-set minibuffer-local-map "M-A" #'marginalia-cycle)   ;; LM: aggiunto perche' non funzionava
+
 ;;  ————————————————————  consult  —————————————————————————————————————————  ;;
 ;; comandi arricchiti che si integrano con vertico:
 ;; consult-buffer, consult-line, consult-grep, consult-find ecc.
