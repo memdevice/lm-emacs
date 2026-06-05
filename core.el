@@ -10,8 +10,8 @@
 (scroll-bar-mode -1)                         ;; no scroll bar
 (setq inhibit-startup-message t)             ;; no startup screen
 (setq inhibit-startup-echo-area-message t)
-;;;(setq message-log-max nil)                   ;; disabilita il log nel *Messages* buffer
-;;;(kill-buffer "*Messages*")                   ;; commenta queste due righe se vuoi il log
+;;;(setq message-log-max nil)                ;; disabilita il log nel *Messages* buffer
+;;;(kill-buffer "*Messages*")               ;; commenta queste due righe se vuoi il log
 (message "Reading cnfgrtn file - resistence is futile.")
 
 ;;  ————————————————————  path e file di sistema  ——————————————————————————  ;;
@@ -130,20 +130,20 @@
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
 ;;  ————————————————————  keybindings core  ————————————————————————————————  ;;
+;; NB: i kb estesi e le famiglie sono in lm-keybindings.el
+;; Qui solo i kb indispensabili, basati su funzioni native Emacs, zero dipendenze
 
 ;;  — navigazione buffer —
 (global-set-key (kbd "C-<tab>")   'next-buffer)
 (global-set-key (kbd "C-S-<tab>") 'previous-buffer)
 (global-set-key (kbd "C-x k")     'kill-current-buffer)
 (global-set-key (kbd "C-x C-b")   'ibuffer)
-(global-set-key (kbd "C-c B")     'bury-buffer)
+;; (global-set-key (kbd "C-c B")  'bury-buffer)              ;; TODO: trovare collocazione in famiglia
 
 ;;  — editing —
-;; (global-set-key (kbd "C-c x") #'exchange-point-and-mark)  ;; TODO: non funziona correttamente, da risolvere
+(global-set-key (kbd "C-x C-x") #'exchange-point-and-mark) ;; ripristinato: CUA mode rimosso
 (global-set-key (kbd "M-z")   'zap-up-to-char)
 (global-set-key (kbd "M-Z")   'zap-to-char)
-(global-set-key (kbd "C-c d") 'kill-whole-line)
-(global-set-key (kbd "C-c j") 'join-line)
 (define-key global-map (kbd "C-c +") 'text-scale-increase)
 (define-key global-map (kbd "C-c -") 'text-scale-decrease)
 
@@ -152,22 +152,26 @@
 (global-set-key (kbd "C-r")   'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
-(global-set-key (kbd "C-c o") 'occur)
-(global-set-key (kbd "C-c r") 'query-replace-regexp)
 
-;;  — org e file rapidi (TODO: spostare in file note dedicato) —
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c n") (lambda () (interactive) (find-file "~/note.org")))
-(global-set-key (kbd "C-c f") (lambda () (interactive) (find-file "~/F-T-G.org")))
-(global-set-key (kbd "C-c z") (lambda () (interactive) (find-file "~/zibalduccio.org")))
-(setq org-default-notes-file "~/organizer.org")
+;;  — undo —
+(global-set-key (kbd "C-z") 'undo)                          ;; C-z come undo (ex CUA)
 
-;;  — misc —
-(global-set-key (kbd "C-c b")   'ding)
-(global-set-key (kbd "C-c C-j") 'eval-buffer)
-(global-set-key (kbd "C-c v")   'visual-line-mode)
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region   'disabled nil)
+;;  — re-enable —
+(put 'downcase-region 'disabled nil)                        ;; C-x C-l lowercase region
+(put 'upcase-region   'disabled nil)                        ;; C-x C-u uppercase region
+
+;;  — org e file rapidi (TODO: spostare e modificare in file note dedicato) —
+;; (global-set-key (kbd "C-c c") 'org-capture)
+;; (global-set-key (kbd "C-c n") (lambda () (interactive) (find-file "~/note.org")))
+;; (global-set-key (kbd "C-c f") (lambda () (interactive) (find-file "~/F-T-G.org")))
+;; (global-set-key (kbd "C-c z") (lambda () (interactive) (find-file "~/zibalduccio.org")))
+;; (setq org-default-notes-file "~/organizer.org")
+
+;;  — test e eval — (spostati in lm-keybindings.el)
+;; (global-set-key (kbd "C-c t b") 'ding)                    ;; C-c t b: test bell → lm-keybindings.el
+;; (global-set-key (kbd "C-c b")   'ding)                    ;; vecchio kb test bell
+;; (global-set-key (kbd "C-c C-j") 'eval-buffer)             ;; vecchio kb → sostituito da C-c x b
+;; (global-set-key (kbd "C-c x b") 'eval-buffer)             ;; C-c x b: eval buffer → lm-keybindings.el
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              end of core.el                                 ;;
