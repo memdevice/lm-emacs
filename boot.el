@@ -16,8 +16,8 @@
 (when (eq system-type 'gnu/linux)
   ;; Default font
   (set-face-attribute 'default nil
-    :family "Monospace"
-    :height 130)
+    :family "Inconsolata"
+    :height 160)
 
   ;; ------------------------------------------------------------
   ;; Font preview — scratch buffer use only
