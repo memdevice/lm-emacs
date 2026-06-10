@@ -1,14 +1,14 @@
-;; Time-stamp: <>
+;; Time-stamp: <2026-06-10 11:17:57 ramius>
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          LM init.el - bootstrap                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (load (expand-file-name "proxy"       user-emacs-directory))       ; credenziali proxy - off by default
+;;(load (expand-file-name "proxy"       user-emacs-directory)) ; credenziali proxy - off by default
 (load (expand-file-name "core"         user-emacs-directory))
 (load (expand-file-name "functions"    user-emacs-directory))
 (load (expand-file-name "packages"     user-emacs-directory))
-;; (load (expand-file-name "lm-keybindings" user-emacs-directory))  ; TODO: keybindings - complesso!
+;;(load (expand-file-name "lm-keybindings" user-emacs-directory)) ; TODO: keybindings - complesso!
 (load (expand-file-name "ui-modern"    user-emacs-directory))
 (load (expand-file-name "boot"         user-emacs-directory))
-;; (when (eq system-type 'windows-nt) (load (expand-file-name "win32" user-emacs-directory)))
-;; (load (expand-file-name "sandbox"    user-emacs-directory))       ; off by default
+;;(when (eq system-type 'windows-nt) (load (expand-file-name "win32" user-emacs-directory)))
+;;(load (expand-file-name "sandbox"    user-emacs-directory))  ; per sperimentazione - off by default

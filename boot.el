@@ -13,6 +13,26 @@
                     :family "Consolas"        ;; font Consolas
                     :height 110)              ;; 11pt (height = pt * 10)
 
+(when (eq system-type 'gnu/linux)
+  ;; Default font
+  (set-face-attribute 'default nil
+    :family "Monospace"
+    :height 130)
+
+  ;; ------------------------------------------------------------
+  ;; Font preview — scratch buffer use only
+  ;; Eval one at a time with C-x C-e to preview each font
+  ;; ------------------------------------------------------------
+  ;; (set-face-attribute 'default nil :family "Iosevka"                     :height 120)
+  ;; (set-face-attribute 'default nil :family "JetBrains Mono"              :height 120)
+  ;; (set-face-attribute 'default nil :family "Hack"                        :height 120)
+  ;; (set-face-attribute 'default nil :family "Inconsolata"                 :height 120)
+  ;; (set-face-attribute 'default nil :family "Atkinson Hyperlegible Mono"  :height 120)
+  ;; (set-face-attribute 'default nil :family "Input Mono"                  :height 120)
+  ;; Reset to default
+  ;; (set-face-attribute 'default nil :family "Monospace" :height 130)
+  ) ;; end gnu/linux
+
 ;;  ————————————————————  cursore  —————————————————————————————————————————  ;;
 ;; (set-cursor-color "orange")                ;; cursore arancione
 (set-cursor-color "coral")                    ;; cursore corallo
