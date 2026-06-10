@@ -37,24 +37,19 @@
 ;; C-x C-j  →  dired-jump: apre dired nella directory del buffer corrente
 
 ;;  ————————————————————  package esterni  —————————————————————————————————  ;;
-
 ;; (aggiungi qui i nuovi package con :ensure t)
 
-;; —————————————————————————————————————————————————————————————————————————  ;;
+;;  ————————————————————  standby  —————————————————————————————————————————  ;;
+;; (use-package smartscan                ;; M-n / M-p: salta tra simboli identici nel buffer
+;;   :ensure t
+;;   :config (global-smartscan-mode 1))
 
-(use-package smartscan                ;; salta tra simboli identici nel buffer
-   :ensure t
-   :config (global-smartscan-mode 1))
-;; M-n : salta al simbolo identico successivo
-;; M-p : salta al simbolo identico successivo
-
-(use-package lorem-ipsum              ;; inserisce il testo del lorem ipsum
-   :ensure t
-   :config (lorem-ipsum-use-default-bindings))
-;; C-c l p: lorem-ipsum-insert-paragraphs
-;; C-c l s: lorem-ipsum-insert-sentences
-;; C-c l l: lorem-ipsum-insert-list
-
+;; (use-package lorem-ipsum              ;; inserisce testo lorem ipsum
+;;   :ensure t
+;;   :config (lorem-ipsum-use-default-bindings))
+;; ;; C-c l p: lorem-ipsum-insert-paragraphs
+;; ;; C-c l s: lorem-ipsum-insert-sentences
+;; ;; C-c l l: lorem-ipsum-insert-list
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                            end of packages.el                               ;;

@@ -31,8 +31,7 @@
   :ensure t
   :init
   (marginalia-mode 1))
-
-(keymap-set minibuffer-local-map "M-A" #'marginalia-cycle)   ;; LM: aggiunto perche' non funzionava
+(keymap-set minibuffer-local-map "M-A" #'marginalia-cycle)   ;; LM: cicla tra i tipi di annotazione
 
 ;;  ————————————————————  consult  —————————————————————————————————————————  ;;
 ;; comandi arricchiti che si integrano con vertico:

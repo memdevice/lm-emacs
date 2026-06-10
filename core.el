@@ -88,8 +88,8 @@
 (global-set-key [f2]  'switch-to-minibuffer)  ;; [F2] focus al minibuffer
 ;; [F3]                                        ;; [F3] start recording macro
 ;; [F4]                                        ;; [F4] stop recording / execute macro
-(global-set-key [f5]  'reload-dotemacs)       ;; [F5] reload init.el
-(global-set-key [f6]  'xah-new-empty-buffer)  ;; [F6] nuovo buffer vuoto
+;; (global-set-key [f5]  'switch-to-scratch)    ;; [F5] non funziona su Windows - TODO
+;; (global-set-key [f6]  'xah-new-empty-buffer) ;; [F6] non funziona su Windows - TODO
 (global-set-key [f7]  'kill-other-buffers)    ;; [F7] kill tutti i buffer tranne il corrente
 (global-set-key [f8]  'repeat)                ;; [F8] repeat last command (alias C-x z)
 (global-set-key [f9]  'recentf-open-files)    ;; [F9] file aperti di recente
@@ -108,10 +108,11 @@
       (select-window (active-minibuffer-window))
     (error "Minibuffer is not active")))
 
-;; [F5] reload init.el
-(defun reload-dotemacs ()
+;; [F5] torna al buffer *scratch*, creandolo se non esiste
+(defun switch-to-scratch ()
+  "Switch to *scratch* buffer, creating it if it does not exist."
   (interactive)
-  (load-file "~/.emacs.d/init.el"))
+  (switch-to-buffer (get-buffer-create "*scratch*")))
 
 ;; [F6] nuovo buffer vuoto
 (defun xah-new-empty-buffer ()
@@ -133,28 +134,30 @@
 ;; NB: i kb estesi e le famiglie sono in lm-keybindings.el
 ;; Qui solo i kb indispensabili, basati su funzioni native Emacs, zero dipendenze
 
+;;  — non CUA mode —
+;; CUA rectangle selection (C-RET), no CUA key remapping
+(cua-selection-mode 1)
+
+;; non CUA mode LM
+(global-set-key (kbd "C-z")   #'undo)           ;; replaces suspend-frame
+(global-set-key (kbd "C-w")   #'kill-ring-save) ;; copy (frequent)
+(global-set-key (kbd "M-w")   #'kill-region)    ;; cut (infrequent)
+(global-set-key (kbd "C-S-w") #'kill-region)    ;; cut alias, GUI only
+;;; (global-set-key (kbd "C-v") #'yank)         ;; paste alias, PgUp/PgDn for scrolling
+
 ;;  — navigazione buffer —
 (global-set-key (kbd "C-<tab>")   'next-buffer)
 (global-set-key (kbd "C-S-<tab>") 'previous-buffer)
 (global-set-key (kbd "C-x k")     'kill-current-buffer)
-(global-set-key (kbd "C-x C-b")   'ibuffer)
-;; (global-set-key (kbd "C-c B")  'bury-buffer)              ;; TODO: trovare collocazione in famiglia
+(global-set-key (kbd "C-x C-b") 'ibuffer)             ;; ibuffer, better default
+;; (global-set-key (kbd "C-c B")   'bury-buffer)         ;; TODO: trovare collocazione in famiglia
+(global-set-key (kbd "C-c b s") 'switch-to-scratch)      ;; TODO: trovare tasto funzione
 
 ;;  — editing —
-(global-set-key (kbd "C-x C-x") #'exchange-point-and-mark) ;; ripristinato: CUA mode rimosso
 (global-set-key (kbd "M-z")   'zap-up-to-char)
 (global-set-key (kbd "M-Z")   'zap-to-char)
 (define-key global-map (kbd "C-c +") 'text-scale-increase)
 (define-key global-map (kbd "C-c -") 'text-scale-decrease)
-
-;;  — ricerca —
-(global-set-key (kbd "C-s")   'isearch-forward-regexp)
-(global-set-key (kbd "C-r")   'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-
-;;  — undo —
-(global-set-key (kbd "C-z") 'undo)                          ;; C-z come undo (ex CUA)
 
 ;;  — re-enable —
 (put 'downcase-region 'disabled nil)                        ;; C-x C-l lowercase region
@@ -169,8 +172,7 @@
 
 ;;  — test e eval — (spostati in lm-keybindings.el)
 ;; (global-set-key (kbd "C-c t b") 'ding)                    ;; C-c t b: test bell → lm-keybindings.el
-;; (global-set-key (kbd "C-c b")   'ding)                    ;; vecchio kb test bell
-;; (global-set-key (kbd "C-c C-j") 'eval-buffer)             ;; vecchio kb → sostituito da C-c x b
+(global-set-key (kbd "C-c C-j") 'eval-buffer)               ;; vecchio kb — mantenuto temporaneamente
 ;; (global-set-key (kbd "C-c x b") 'eval-buffer)             ;; C-c x b: eval buffer → lm-keybindings.el
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
